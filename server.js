@@ -34,7 +34,7 @@ mysqlssh.connect(
 .then(client => {
     client.query('SELECT 1+1 AS Result', function (err, results, fields) {
         if (err) throw err
-        console.log(results);
+        console.log(results[0].Result);
         mysqlssh.close()
     })
 })
