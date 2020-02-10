@@ -27,4 +27,4 @@ connection.query(query, (err, results, fields) => {
     });
 });
 
-connection.end();
+// connection.end();
