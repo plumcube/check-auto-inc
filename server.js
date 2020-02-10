@@ -1,10 +1,11 @@
-// var mysql      = require('mysql');
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'root',
-//   password : 'root',
-//   database : 'dev_buzz_db'
-// });
+const mysql = require('mysql');
+const mysqlssh = require('mysql-ssh');
+const config = require('./config');
+
+
+
+
+// var connection = mysql.createConnection(mysql_config);
 
 // connection.connect();
 
@@ -15,8 +16,9 @@
 
 // connection.end();
 
-const mysqlssh = require('mysql-ssh');
-const config = require('./config');
+
+
+
 
 const connection = mysqlssh.connect(config.ssh_host, config.mysql_config);
 
@@ -30,7 +32,7 @@ let query = `
     AND t.TABLE_TYPE = 'BASE TABLE'`;
 
 connection.then(client => {
-    client.query(query, function (err, results, fields) {
+    client.query(query, (err, results, fields) => {
         if (err) throw err
 
         results.map(row => {
@@ -39,7 +41,7 @@ connection.then(client => {
             FROM ` + row.TABLE_SCHEMA + `.` + row.TABLE_NAME + ` HAVING MAX(` + row.COLUMN_NAME + `) + 1 != ` + row.AUTO_INCREMENT;
             console.log(query2);
             connection.then(client => {
-                client.query(query2, function (err, results, fields) {
+                client.query(query2, (err, results, fields) => {
                     if (err) throw err
                     if (results.length) console.log(results);
                 });
