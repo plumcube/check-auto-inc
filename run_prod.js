@@ -20,7 +20,7 @@ connection.query(query, (err, results, fields) => {
         let query2 = `
         SELECT '` + row.TABLE_SCHEMA + `', '` + row.TABLE_NAME + `', ` + row.AUTO_INCREMENT + ` AS AUTO_INCREMENT, MAX(` + row.COLUMN_NAME + `)
         FROM ` + row.TABLE_SCHEMA + `.` + row.TABLE_NAME + ` HAVING MAX(` + row.COLUMN_NAME + `) + 1 != ` + row.AUTO_INCREMENT;
-        connection..query(query2, (err, results, fields) => {
+        connection.query(query2, (err, results, fields) => {
             if (err) throw err
             if (results.length) console.log(results);
         });
