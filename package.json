@@ -1,0 +1,23 @@
+{
+  "name": "check-auto-inc",
+  "version": "1.0.0",
+  "description": "This script checks if there are any auto increment fields that are out of sync with the max id field",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plumcube/check-auto-inc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plumcube/check-auto-inc/issues"
+  },
+  "homepage": "https://github.com/plumcube/check-auto-inc#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
