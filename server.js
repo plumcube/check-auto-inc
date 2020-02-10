@@ -15,38 +15,42 @@
 
 // connection.end();
 
-
 const mysqlssh = require('mysql-ssh');
+const config = require('./config');
 
-const ssh_host = {
-    host: '10.211.55.13',
-    user: 'vagrant',
-    password: 'vagrant'
-};
+const connection = mysqlssh.connect(config.ssh_host, config.mysql_config);
 
-const mysql_config = {
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'dev_buzz_db'
-};
+let query = `
+    SELECT t.AUTO_INCREMENT, c.COLUMN_NAME, t.TABLE_SCHEMA, t.TABLE_NAME
+    FROM
+    information_schema.tables t
+    INNER JOIN information_schema.columns c ON c.TABLE_SCHEMA = t.TABLE_SCHEMA AND c.TABLE_NAME = t.TABLE_NAME
+    WHERE c.extra = 'auto_increment'
+    AND t.auto_increment != 1
+    AND t.TABLE_TYPE = 'BASE TABLE'`;
 
-const connection = mysqlssh.connect(ssh_host, mysql_config);
+connection.then(client => {
+    client.query(query, function (err, results, fields) {
+        if (err) throw err
 
-const execute = query => {
-    connection.then(client => {
-        client.query(query, function (err, results, fields) {
-            if (err) throw err
-            console.log(results[0].Result);
-            mysqlssh.close()
-        })
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
+        results.map(row => {
+            let query2 = `
+            SELECT '` + row.TABLE_SCHEMA + `', '` + row.TABLE_NAME + `', ` + row.AUTO_INCREMENT + ` AS AUTO_INCREMENT, MAX(` + row.COLUMN_NAME + `)
+            FROM ` + row.TABLE_SCHEMA + `.` + row.TABLE_NAME + ` HAVING MAX(` + row.COLUMN_NAME + `) + 1 != ` + row.AUTO_INCREMENT;
+            console.log(query2);
+            connection.then(client => {
+                client.query(query2, function (err, results, fields) {
+                    if (err) throw err
+                    if (results.length) console.log(results);
+                });
+            });
+        });
+    });
+})
+.catch(err => {
+    console.log(err)
+});
 
 
-execute(`
-    SELECT 1+1 AS Result
-`);
+
+
