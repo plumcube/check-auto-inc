@@ -39,7 +39,6 @@ connection.then(client => {
             let query2 = `
             SELECT '` + row.TABLE_SCHEMA + `', '` + row.TABLE_NAME + `', ` + row.AUTO_INCREMENT + ` AS AUTO_INCREMENT, MAX(` + row.COLUMN_NAME + `)
             FROM ` + row.TABLE_SCHEMA + `.` + row.TABLE_NAME + ` HAVING MAX(` + row.COLUMN_NAME + `) + 1 != ` + row.AUTO_INCREMENT;
-            console.log(query2);
             connection.then(client => {
                 client.query(query2, (err, results, fields) => {
                     if (err) throw err
