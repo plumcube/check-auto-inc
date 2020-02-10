@@ -15,7 +15,7 @@ let query = `
     AND t.TABLE_TYPE = 'BASE TABLE'`;
 
 connection.query(query, (err, results, fields) => {
-    if (error) throw err;
+    if (err) throw err;
     results.map(row => {
         let query2 = `
         SELECT '` + row.TABLE_SCHEMA + `', '` + row.TABLE_NAME + `', ` + row.AUTO_INCREMENT + ` AS AUTO_INCREMENT, MAX(` + row.COLUMN_NAME + `)
