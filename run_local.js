@@ -1,25 +1,5 @@
-const mysql = require('mysql');
 const mysqlssh = require('mysql-ssh');
 const config = require('./config');
-
-
-
-
-// var connection = mysql.createConnection(mysql_config);
-
-// connection.connect();
-
-// connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-//   if (error) throw error;
-//   console.log('The solution is: ', results[0].solution);
-// });
-
-// connection.end();
-
-
-
-
-
 const connection = mysqlssh.connect(config.ssh_host, config.mysql_config);
 
 let query = `
