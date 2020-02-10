@@ -46,4 +46,7 @@ const execute = query => {
     })
 }
 
-execute('SELECT 1+1 AS Result');
+
+execute(`
+    SELECT 1+1 AS Result
+`);
