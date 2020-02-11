@@ -13,7 +13,11 @@ const setResult = (key, val) => {
 }
 
 const printResult = () => {
-    console.log(result.sort());
+    const ordered = {};
+    Object.keys(result).sort().map(key => {
+      ordered[key] = result[key];
+    });
+    console.log(ordered);
 }
 
 const execute = query => {
