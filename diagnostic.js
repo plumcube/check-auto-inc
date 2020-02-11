@@ -41,10 +41,10 @@ try {
             var row = JSON.parse(str);
             var query = `SELECT '` + row.db + `.` + row.table + `' AS TableName, COUNT(*) AS Cnt FROM ` + row.db + `.` + row.table;
             execute(query);
-        } else {
-            printResult();
         }
     });
+
+    setTimeOut(printResult, 20000);
 } catch (err) {
   console.error(err)
 }
