@@ -1,18 +1,21 @@
 const fs = require('fs');
 const mysql = require('mysql');
 const config = require('./config');
-const connection = mysql.createConnection(config.mysql_config);
+const conn56 = mysql.createConnection(config.original_mysql_config);
+const conn57 = mysql.createConnection(config.mysql_config);
+
+conn56.connect();
+conn57.connect();
 
 const execute = query => {
-    connection.then(client => {
-        client.query(query, (err, results, fields) => {
+    conn56.query(query, (err, results, fields) => {
+        if (err) throw err
+        console.log(results);
+        conn57.query(query, (err, results, fields) => {
             if (err) throw err
             console.log(results);
-        });
+        })
     })
-    .catch(err => {
-        console.log(err)
-    });
 }
 
 try {
