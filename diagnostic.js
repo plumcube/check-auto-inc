@@ -21,9 +21,11 @@ const execute = query => {
 try {
     const data = fs.readFileSync('./data', 'utf8');
     data.split("\n").map(str => {
-        var row = JSON.parse(str);
-        var query = `SELECT ` + row.db + `.` + row.table + `, COUNT(*) FROM ` + row.db + `.` + row.table;
-        execute(query);
+        if (str) {
+            var row = JSON.parse(str);
+            var query = `SELECT ` + row.db + `.` + row.table + `, COUNT(*) FROM ` + row.db + `.` + row.table;
+            execute(query);
+        }
     });
 } catch (err) {
   console.error(err)
