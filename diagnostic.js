@@ -8,6 +8,7 @@ conn56.connect();
 conn57.connect();
 
 const execute = query => {
+    console.log(query);
     conn56.query(query, (err, results, fields) => {
         if (err) throw err
         console.log(results);
@@ -22,6 +23,7 @@ try {
     const data = fs.readFileSync('./data', 'utf8');
     data.split("\n").map(str => {
         if (str) {
+            console.log(str);
             var row = JSON.parse(str);
             var query = `SELECT ` + row.db + `.` + row.table + `, COUNT(*) FROM ` + row.db + `.` + row.table;
             execute(query);
