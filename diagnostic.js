@@ -26,7 +26,7 @@ const execute = query => {
         setResult(query+': old', results[0].Cnt);
         conn57.query({sql: query, timeout: 60000}, (err, results, fields) => {
             if (err) throw err
-            setResult(query+'new', results[0].Cnt);
+            setResult(query+': new', results[0].Cnt);
         })
     })
 }
