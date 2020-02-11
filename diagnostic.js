@@ -24,11 +24,9 @@ const printResult = () => {
 const execute = query => {
     conn56.query({sql: query, timeout: 60000}, (err, results, fields) => {
         if (err) throw err
-        console.log(results);
         setResult(query+'old', results[0].Cnt);
         conn57.query({sql: query, timeout: 60000}, (err, results, fields) => {
             if (err) throw err
-            console.log(results);
             setResult(query+'new', results[0].Cnt);
         })
     })
@@ -44,7 +42,7 @@ try {
         }
     });
 
-    setTimeOut(printResult, 20000);
+    setTimeout(printResult, 20000);
 } catch (err) {
   console.error(err)
 }
