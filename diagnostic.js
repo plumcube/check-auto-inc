@@ -9,10 +9,10 @@ conn57.connect();
 
 const execute = query => {
     console.log(query);
-    conn56.query({query: query, timeout: 60000}, (err, results, fields) => {
+    conn56.query({sql: query, timeout: 60000}, (err, results, fields) => {
         if (err) throw err
         console.log(results);
-        conn57.query({query: query, timeout: 60000}, (err, results, fields) => {
+        conn57.query({sql: query, timeout: 60000}, (err, results, fields) => {
             if (err) throw err
             console.log(results);
         })
