@@ -41,7 +41,7 @@ try {
         }
     });
 
-    setTimeout(printResult, 20000);
+    setTimeout(printResult, 15000);
 } catch (err) {
   console.error(err)
 }
