@@ -13,7 +13,6 @@ const setResult = (key, val) => {
 }
 
 const printResult = () => {
-    console.log(result);
     const ordered = {};
     Object.keys(result).sort().map(key => {
       ordered[key] = result[key];
@@ -24,7 +23,7 @@ const printResult = () => {
 const execute = query => {
     conn56.query({sql: query, timeout: 60000}, (err, results, fields) => {
         if (err) throw err
-        setResult(query+'old', results[0].Cnt);
+        setResult(query+': old', results[0].Cnt);
         conn57.query({sql: query, timeout: 60000}, (err, results, fields) => {
             if (err) throw err
             setResult(query+'new', results[0].Cnt);
@@ -37,7 +36,7 @@ try {
     data.split("\n").map(str => {
         if (str) {
             var row = JSON.parse(str);
-            var query = `SELECT '` + row.db + `.` + row.table + `' AS TableName, COUNT(*) AS Cnt FROM ` + row.db + `.` + row.table;
+            var query = `SELECT COUNT(*) AS Cnt FROM ` + row.db + `.` + row.table;
             execute(query);
         }
     });
